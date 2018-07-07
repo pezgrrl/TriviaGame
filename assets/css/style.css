@@ -1,6 +1,51 @@
-body {
-    font-family: 'Felipa', cursive;
-    color: black;
-    font-size: 20px;
-    background: url()
-}
+    body {
+        background-color: rgb(0, 0, 0);
+        background-image: url(http://www.zingerbugimages.com/backgrounds/tan_parchment_paper_wallpaper_texture_seamless.jpg);
+        background-position: top left;
+        background-repeat: repeat;
+        background-attachment: fixed;
+        font-family: 'Felipa', cursive;
+        color: black;
+        font-size: 30px;
+        line-height: 50px;
+    }
+
+    h1 {
+        font-family: 'Felipa', cursive;
+        color: black;
+        text-align: center;
+        font-size: 40px;
+    }
+
+    .btn-primary,
+    .reset {
+        background-color: red;
+        color: white;
+        font-family: 'Felipa', cursive;
+        font-size: 30px;
+        padding: 20px;
+        margin-top: 100px;
+    }
+
+    .reset:hover {
+        background-color: navy;
+    }
+
+    .container {
+        margin-top: 50px;
+        text-align: center;
+        height: 100%;
+        width: 700px;
+    }
+
+    h2,
+    #message,
+    #finalMessage {
+        font-family: 'Felipa', cursive;
+    }
+
+    .thisChoice:hover {
+        background-color: mediumblue;
+        color: white;
+        padding: 10px;
+    }

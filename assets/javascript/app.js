@@ -52,8 +52,8 @@ var triviaQuestions = [{
     answer: 3
 }, {
 
-    question: "What is the “rule of law”?",
-    answerList: ["No one is above the law", "The President is exempt", "The judiciary", "Police use of force"],
+    question: "What is the supreme law of the land?",
+    answerList: ["The Constitution", "The President", "The Declaration of Independence", "The Emancipation Proclamation"],
     answer: 0
 }, {
 
@@ -110,6 +110,7 @@ function newQuestion() {
     $('#correctedAnswer').empty();
     answered = true;
 
+
     $('#currentQuestion').html('Question #' + (currentQuestion + 1) + '/' + triviaQuestions.length);
     $('.question').html('<h2>' + triviaQuestions[currentQuestion].question + '</h2>');
     for (var i = 0; i < 4; i++) {
@@ -121,9 +122,9 @@ function newQuestion() {
         choices.addClass('thisChoice');
         $('.answerList').append(choices);
     }
-
+    countdown();
     $('.thisChoice').on('click', function () {
-        userSelect = $(this).data('index');
+        playerChoice = $(this).data('index');
         clearInterval(time);
         answerPage();
     });
@@ -135,3 +136,59 @@ function countdown() {
     answered = true;
     time = setInterval(showCountdown, 1000);
 }
+
+function showCountdown() {
+    seconds--;
+    $('#timeLeft').html('<h3>Time Remaining: ' + seconds + '</h3>');
+    if (seconds < 1) {
+        clearInterval(time);
+        answered = false;
+        answerPage();
+    }
+}
+
+function answerPage(){
+	$('#currentQuestion').empty();
+	$('.thisChoice').empty(); 
+	$('.question').empty();
+
+	var rightAnswerText = triviaQuestions[currentQuestion].answerList[triviaQuestions[currentQuestion].answer];
+	var rightAnswerIndex = triviaQuestions[currentQuestion].answer;
+
+	if((playerChoice == rightAnswerIndex) && (answered == true)){
+		correctAnswer++;
+		$('#message').html(messages.correct);
+	} else if((playerChoice != rightAnswerIndex) && (answered == true)){
+		incorrectAnswer++;
+		$('#message').html(messages.incorrect);
+		$('#correctedAnswer').html('The correct answer was: ' + rightAnswerText);
+	} else{
+		unanswered++;
+		$('#message').html(messages.endTime);
+		$('#correctedAnswer').html('The correct answer was: ' + rightAnswerText);
+		answered = true;
+	}
+	
+	if(currentQuestion == (triviaQuestions.length-1)){
+		setTimeout(scoreboard, 5000)
+	} else{
+		currentQuestion++;
+		setTimeout(newQuestion, 5000);
+	}	
+}
+
+function scoreboard(){
+	$('#timeLeft').empty();
+	$('#message').empty();
+	$('#correctedAnswer').empty();
+	$('#gif').empty();
+
+	$('#finalMessage').html(messages.finished);
+	$('#correctAnswers').html("Correct Answers: " + correctAnswer);
+	$('#incorrectAnswers').html("Incorrect Answers: " + incorrectAnswer);
+	$('#unanswered').html("Unanswered: " + unanswered);
+	$('#startOverBtn').addClass('reset');
+	$('#startOverBtn').show();
+	$('#startOverBtn').html('Start Over?');
+}
+
